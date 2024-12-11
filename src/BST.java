@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 /**
  * An Integer Binary Search Tree
+ *
  * @author: Your Name Here
  * @version: Date
  */
@@ -32,22 +33,44 @@ public class BST {
     /**
      * Prints the provided ArrayList of nodes
      * in the form node1-node2-node3
+     *
      * @param nodes ArrayList of BSTNodes
      */
     public static void printNodes(ArrayList<BSTNode> nodes) {
-        for(int i=0; i<nodes.size()-1; i++) {
+        for (int i = 0; i < nodes.size() - 1; i++) {
             System.out.print(nodes.get(i) + "-");
         }
-        System.out.println(nodes.get(nodes.size()-1));
+        System.out.println(nodes.get(nodes.size() - 1));
     }
 
     /**
      * A function that searches for a value in the tree
+     *
      * @param val integer value to search for
      * @return true if val is in the tree, false otherwise
      */
     public boolean search(int val) {
-        // TODO: Complete the search function
+        return searchHelper(val, this.getRoot());
+
+    }
+
+    public boolean searchHelper(int val, BSTNode root) {
+        if (root == null) {
+            return true;
+        }
+
+        if (val == root.getVal())// if get left == null and get right == null)
+        {
+            return true;
+        }
+
+        if (val < root.getVal()) {
+            return searchHelper(val, root.getLeft());
+        }
+
+        if (val > root.getVal()) {
+            return searchHelper(val, root.getRight());
+        }
         return false;
     }
 
@@ -55,39 +78,101 @@ public class BST {
      * @return ArrayList of BSTNodes in inorder
      */
     public ArrayList<BSTNode> getInorder() {
-        // TODO: Complete inorder traversal
-        return null;
+        ArrayList<BSTNode> treeNodes = new ArrayList<BSTNode>();
+        getInorderHelper(this.getRoot(), treeNodes);
+        return treeNodes;
+
+    }
+
+    public void getInorderHelper(BSTNode root, ArrayList<BSTNode> treeNodes) {
+        if (root == null) {
+            return;
+        }
+
+        getInorderHelper(root.getLeft(), treeNodes);
+        treeNodes.add(root);
+        getInorderHelper(root.getRight(), treeNodes);
+
     }
 
     /**
      * @return ArrayList of BSTNodes in preorder
      */
     public ArrayList<BSTNode> getPreorder() {
-        // TODO: Complete preorder traversal
-        return null;
+        ArrayList<BSTNode> treeNodes = new ArrayList<BSTNode>();
+        getPreorderHelper(this.getRoot(), treeNodes);
+        return treeNodes;
+    }
+
+    public void getPreorderHelper(BSTNode root, ArrayList<BSTNode> treeNodes) {
+        if (root == null) {
+            return;
+        }
+
+        treeNodes.add(root);
+        getPreorderHelper(root.getLeft(), treeNodes);
+        getPreorderHelper(root.getRight(), treeNodes);
+
     }
 
     /**
      * @return ArrayList of BSTNodes in postorder
      */
     public ArrayList<BSTNode> getPostorder() {
-        // TODO: Complete postorder traversal
-        return null;
+        ArrayList<BSTNode> treeNodes = new ArrayList<BSTNode>();
+        getPostorderHelper(this.getRoot(), treeNodes);
+        return treeNodes;
+    }
+
+    public void getPostorderHelper(BSTNode root, ArrayList<BSTNode> treeNodes) {
+        if (root == null) {
+            return;
+        }
+
+        getPostorderHelper(root.getLeft(), treeNodes);
+        getPostorderHelper(root.getRight(), treeNodes);
+        treeNodes.add(root);
     }
 
     /**
      * Inserts the given integer value to the tree
      * if it does not already exist. Modifies the
      * root instance variable to be the root of the new modified tree.
+     *
      * @param val The value ot insert
      */
     public void insert(int val) {
         // TODO: Complete insert
+        insertHelper(this.root, val);
+    }
+
+    public void insertHelper(BSTNode root, int val) {
+        if (root.getLeft() == null && root.getRight() == null) {
+            if (val < root.getVal()) {
+                root.setLeft(new BSTNode(val));
+            }
+
+            if (val > root.getVal()) {
+                root.setRight(new BSTNode(val));
+            }
+
+            return;
+        }
+
+
+        if (val < root.getVal()) {
+            insertHelper(root.getLeft(), val);
+        }
+
+        if (val > root.getVal()) {
+            insertHelper(root.getRight(), val);
+        }
     }
 
     /**
      * Determines if the current BST is
      * a valid BST.
+     *
      * @return true if valid false otherwise
      */
     public boolean isValidBST() {
@@ -106,6 +191,7 @@ public class BST {
         System.out.println("\nSearching for 22 in the tree");
         System.out.println(tree.search(22));
 
+        tree.getInorder();
         System.out.println("\nPreorder traversal of binary tree is");
         ArrayList<BSTNode> sol = tree.getPreorder();
         printNodes(sol);
