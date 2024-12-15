@@ -55,19 +55,19 @@ public class BST {
     }
 
     public boolean searchHelper(int val, BSTNode root) {
+        // Base case
         if (root == null) {
             return true;
         }
-
-        if (val == root.getVal())// if get left == null and get right == null)
-        {
+        // Check if val is found
+        if (val == root.getVal()) {
             return true;
         }
-
+        // Checks left root
         if (val < root.getVal()) {
             return searchHelper(val, root.getLeft());
         }
-
+        // Check right root
         if (val > root.getVal()) {
             return searchHelper(val, root.getRight());
         }
@@ -88,7 +88,7 @@ public class BST {
         if (root == null) {
             return;
         }
-
+        // calls sequences of inorder (left, root, right)
         getInorderHelper(root.getLeft(), treeNodes);
         treeNodes.add(root);
         getInorderHelper(root.getRight(), treeNodes);
@@ -109,6 +109,7 @@ public class BST {
             return;
         }
 
+        // Calls sequences of preorder (root, left, right)
         treeNodes.add(root);
         getPreorderHelper(root.getLeft(), treeNodes);
         getPreorderHelper(root.getRight(), treeNodes);
@@ -125,13 +126,16 @@ public class BST {
     }
 
     public void getPostorderHelper(BSTNode root, ArrayList<BSTNode> treeNodes) {
+        // Base case,
         if (root == null) {
             return;
         }
-
+        // Calls sequences of postorder (left, right, root)
         getPostorderHelper(root.getLeft(), treeNodes);
         getPostorderHelper(root.getRight(), treeNodes);
         treeNodes.add(root);
+
+
     }
 
     /**
@@ -147,11 +151,13 @@ public class BST {
     }
 
     public void insertHelper(BSTNode root, int val) {
+        // Base case if this node has no right or left child
         if (root.getLeft() == null && root.getRight() == null) {
+            // If value is less then node create a left child
             if (val < root.getVal()) {
                 root.setLeft(new BSTNode(val));
             }
-
+            // If value is greater than node, create right child
             if (val > root.getVal()) {
                 root.setRight(new BSTNode(val));
             }
@@ -159,11 +165,11 @@ public class BST {
             return;
         }
 
-
+        // Goes left if value is less than node
         if (val < root.getVal()) {
             insertHelper(root.getLeft(), val);
         }
-
+        // Goes right if value is greater tha node
         if (val > root.getVal()) {
             insertHelper(root.getRight(), val);
         }
